@@ -10,14 +10,13 @@ Built with **Next.js**, deployed on **Vercel**, and connected to a **FastAPI bac
 
 ## 🌐 Live Demo
 
-[🔗 Deployed on Vercel](https://llm-api-frontend.vercel.app)
 
 ## ⚙️ Features
 
-- 📄 Text input for custom API context
-- 🚀 Submit button to call backend
-- 📤 Displays OpenAPI, gRPC, and SDK results
-- 🔁 Fully dynamic with LLM backend support
+- Text input for custom API context
+- Submit button to call backend
+- Displays OpenAPI, gRPC, and SDK results
+- Fully dynamic with LLM backend support
 
 ## 🛠️ Getting Started Locally
 
