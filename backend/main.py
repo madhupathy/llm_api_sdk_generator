@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import openai
@@ -31,12 +31,10 @@ def query_gpt(prompt: str):
 @app.post("/generate")
 def generate_api_content(req: ContextRequest):
     context = req.context
-
     prompts = {
         "openapi": f"Generate OpenAPI 3.0 documentation for the following API context:\n{context}",
         "grpc": f"Generate a .proto file with gRPC service and messages for:\n{context}",
         "sdk": f"Generate a Python SDK class that wraps around the REST endpoints for:\n{context}"
     }
-
     result = {k: query_gpt(v) for k, v in prompts.items()}
     return result
