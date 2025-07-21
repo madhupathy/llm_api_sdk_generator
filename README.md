@@ -8,9 +8,6 @@ This is the frontend interface for the **LLM-powered API/SDK Generator**. It all
 
 Built with **Next.js**, deployed on **Vercel**, and connected to a **FastAPI backend** using the OpenAI GPT model.
 
-## 🌐 Live Demo
-
-
 ## ⚙️ Features
 
 - Text input for custom API context
