@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 
 export default function Home() {
@@ -6,7 +5,7 @@ export default function Home() {
   const [results, setResults] = useState({});
 
   const handleSubmit = async () => {
-    const res = await fetch('https://llm-api-sdk-generator.vercel.app/generate', {  
+     const res = await fetch('https://llm-api-sdk-generator.vercel.app/generate', {  
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ context }),
