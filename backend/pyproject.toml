@@ -1,0 +1,8 @@
+
+[project]
+name = "llm-api-sdk-generator"
+version = "0.1.0"
+dependencies = ["fastapi", "openai", "python-dotenv", "uvicorn"]
+
+[tool.uv]
+virtualenvs.in-project = true
