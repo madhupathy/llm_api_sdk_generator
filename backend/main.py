@@ -9,13 +9,12 @@ from openai import OpenAI
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-# Initialize OpenAI client with new SDK
+# Initialize OpenAI client
 client = OpenAI(api_key=openai_api_key)
 
-# Initialize FastAPI app
+# FastAPI app setup
 app = FastAPI()
 
-# Allow CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,19 +22,18 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# Request model
+# Pydantic model
 class ContextRequest(BaseModel):
     context: str
 
-# GPT query function
+# Chat function
 def query_gpt(prompt: str) -> str:
-    response = client.chat.completions.create(
+    chat_completion = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
-    return response.choices[0].message.content.strip()
+    return chat_completion.choices[0].message.content.strip()
 
-# POST endpoint for API generation
 @app.post("/generate")
 def generate_api_content(req: ContextRequest):
     context = req.context
@@ -47,7 +45,6 @@ def generate_api_content(req: ContextRequest):
     result = {k: query_gpt(v) for k, v in prompts.items()}
     return result
 
-# GET health check endpoint
 @app.get("/")
 async def root():
     return {"message": "Backend is up and running!"}
