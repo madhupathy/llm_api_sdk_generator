@@ -11,7 +11,7 @@ This is a full-stack project that uses a **React (Next.js) frontend** and a **Py
 
 ---
 
-## ✨ Features
+## Features
 
 - Input plain English descriptions of API features
 - Generate:
