@@ -5,9 +5,8 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-# Load environment variables
-load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
+# Access API key from Render environment
+openai_api_key = os.environ["OPENAI_API_KEY"]
 
 # Initialize OpenAI client
 client = OpenAI(api_key=openai_api_key)
