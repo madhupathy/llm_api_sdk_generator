@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 
+print("OpenAI SDK version:", openai.__version__)
 # Correct client instantiation: relies on OPENAI_API_KEY from environment
 client = OpenAI()
 
