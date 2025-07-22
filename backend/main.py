@@ -19,11 +19,11 @@ class ContextRequest(BaseModel):
     context: str
 
 def query_gpt(prompt: str) -> str:
-    response = openai.ChatCompletion.create(
+    chat_completion = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
-    return response.choices[0].message["content"].strip()
+    return chat_completion.choices[0].message.content.strip()
 
 @app.post("/generate")
 def generate_api_content(req: ContextRequest):
