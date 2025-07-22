@@ -20,7 +20,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def query_gpt(prompt: str) -> str:
     chat_completion = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}]
     )
     return chat_completion.choices[0].message.content.strip()
