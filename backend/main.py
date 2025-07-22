@@ -3,6 +3,7 @@ import openai  # For version check only
 from openai import OpenAI
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from openai._client import _make_sync_httpx_client
 from pydantic import BaseModel
 
 api_key = os.getenv("OPENAI_API_KEY")
