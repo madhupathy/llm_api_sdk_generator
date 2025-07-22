@@ -5,10 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-print("OpenAI SDK version:", openai.__version__)  # Debug check
-
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=api_key, http_client=_make_client(base_url="https://api.openai.com"))
 
 app = FastAPI()
 
