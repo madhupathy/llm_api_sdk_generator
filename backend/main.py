@@ -1,14 +1,13 @@
+import openai
+from openai import OpenAI
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import openai
-from openai import OpenAI
 
-print("OpenAI SDK version:", openai.__version__)
-# Correct client instantiation: relies on OPENAI_API_KEY from environment
+print("OpenAI SDK version:", openai.__version__)  # Optional debug
+
 client = OpenAI()
 
-# FastAPI app setup
 app = FastAPI()
 
 # Enable CORS for all origins
