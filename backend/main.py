@@ -4,8 +4,6 @@ from pydantic import BaseModel
 import openai
 import os
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
 app = FastAPI()
 
 app.add_middleware(
@@ -17,6 +15,8 @@ app.add_middleware(
 
 class ContextRequest(BaseModel):
     context: str
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def query_gpt(prompt: str) -> str:
     chat_completion = client.chat.completions.create(
