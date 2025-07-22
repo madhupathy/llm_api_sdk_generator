@@ -38,3 +38,7 @@ def generate_api_content(req: ContextRequest):
     }
     result = {k: query_gpt(v) for k, v in prompts.items()}
     return result
+    
+@app.get("/")
+async def root():
+    return {"message": "Backend is up and running!"}
