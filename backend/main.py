@@ -1,13 +1,10 @@
-import os
-import openai  # For version check only
-from openai import OpenAI
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from openai._client import _make_sync_httpx_client
 from pydantic import BaseModel
+import openai
+import os
 
-api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key, http_client=_make_client(base_url="https://api.openai.com"))
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
@@ -22,11 +19,11 @@ class ContextRequest(BaseModel):
     context: str
 
 def query_gpt(prompt: str) -> str:
-    chat_completion = client.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
-    return chat_completion.choices[0].message.content.strip()
+    return response.choices[0].message["content"].strip()
 
 @app.post("/generate")
 def generate_api_content(req: ContextRequest):
