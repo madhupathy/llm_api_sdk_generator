@@ -1,16 +1,21 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import openai
 import os
 from dotenv import load_dotenv
+from openai import OpenAI
 
+# Load environment variables
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
+# Initialize OpenAI client with new SDK
+client = OpenAI(api_key=openai_api_key)
+
+# Initialize FastAPI app
 app = FastAPI()
 
+# Allow CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,16 +23,19 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+# Request model
 class ContextRequest(BaseModel):
     context: str
 
-def query_gpt(prompt: str):
-    response = openai.ChatCompletion.create(
+# GPT query function
+def query_gpt(prompt: str) -> str:
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content.strip()
 
+# POST endpoint for API generation
 @app.post("/generate")
 def generate_api_content(req: ContextRequest):
     context = req.context
@@ -38,7 +46,8 @@ def generate_api_content(req: ContextRequest):
     }
     result = {k: query_gpt(v) for k, v in prompts.items()}
     return result
-    
+
+# GET health check endpoint
 @app.get("/")
 async def root():
     return {"message": "Backend is up and running!"}
