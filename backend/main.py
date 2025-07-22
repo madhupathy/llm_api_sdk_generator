@@ -1,16 +1,17 @@
-import openai
+import os
+import openai  # For version check only
 from openai import OpenAI
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-print("OpenAI SDK version:", openai.__version__)  # Optional debug
+print("OpenAI SDK version:", openai.__version__)  # Debug check
 
-client = OpenAI()
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
 
-# Enable CORS for all origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,11 +19,9 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# Request model
 class ContextRequest(BaseModel):
     context: str
 
-# GPT query function
 def query_gpt(prompt: str) -> str:
     chat_completion = client.chat.completions.create(
         model="gpt-4",
@@ -30,7 +29,6 @@ def query_gpt(prompt: str) -> str:
     )
     return chat_completion.choices[0].message.content.strip()
 
-# POST endpoint
 @app.post("/generate")
 def generate_api_content(req: ContextRequest):
     context = req.context
@@ -42,7 +40,6 @@ def generate_api_content(req: ContextRequest):
     result = {k: query_gpt(v) for k, v in prompts.items()}
     return result
 
-# Health check
 @app.get("/")
 async def root():
     return {"message": "Backend is up and running!"}
